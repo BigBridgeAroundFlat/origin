@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - SeBank
+  - Chara
+  - Enemy
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -13,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Chara
   - 
   - 
   - 
@@ -40,4 +44,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Bg
+    uniqueID: 3047285409
+    locked: 0
+  - name: Chara
+    uniqueID: 2864374203
+    locked: 0
+  - name: Effect
+    uniqueID: 3509249021
     locked: 0

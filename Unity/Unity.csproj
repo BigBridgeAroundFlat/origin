@@ -211,6 +211,18 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets/Plugins/DOTween/DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>Assets/Plugins/DOTween/DOTween43.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween46">
+      <HintPath>Assets/Plugins/DOTween/DOTween46.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween50">
+      <HintPath>Assets/Plugins/DOTween/DOTween50.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/priva/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
     </Reference>
@@ -225,7 +237,52 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Script\Test.cs" />
+    <ProjectReference Include="Unity.Plugins.csproj">
+      <Project>{D1FDB199-0FB7-099D-3771-C6A942E4E326}</Project>
+      <Name>Unity.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Scripts\Battle\BattleController.cs" />
+    <Compile Include="Assets\Scripts\Define\CommonDefine.cs" />
+    <Compile Include="Assets\Scripts\Define\DialogDefine.cs" />
+    <Compile Include="Assets\Scripts\Define\FadeDefine.cs" />
+    <Compile Include="Assets\Scripts\Define\SoundDefine.cs" />
+    <Compile Include="Assets\Scripts\Dialog\DialogAnimation.cs" />
+    <Compile Include="Assets\Scripts\Dialog\DialogBase.cs" />
+    <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
+    <Compile Include="Assets\Scripts\Dialog\OkCancelDialog.cs" />
+    <Compile Include="Assets\Scripts\Engine\InputManager.cs" />
+    <Compile Include="Assets\Scripts\Engine\ResourceManager.cs" />
+    <Compile Include="Assets\Scripts\Engine\Singleton\OnlyOneBehavior.cs" />
+    <Compile Include="Assets\Scripts\Engine\Singleton\Singleton.cs" />
+    <Compile Include="Assets\Scripts\Engine\Singleton\SingletonMonoBehaiviour.cs" />
+    <Compile Include="Assets\Scripts\Engine\TransitionSceneManager.cs" />
+    <Compile Include="Assets\Scripts\Extension\ButtonExtension.cs" />
+    <Compile Include="Assets\Scripts\Extension\ListExtension.cs" />
+    <Compile Include="Assets\Scripts\Extension\StringExtensions.cs" />
+    <Compile Include="Assets\Scripts\Sound\BgmFade.cs" />
+    <Compile Include="Assets\Scripts\Sound\SeBank.cs" />
+    <Compile Include="Assets\Scripts\Sound\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Title\TitleController.cs" />
+    <Compile Include="Assets\Scripts\Utility\AutoDestroy.cs" />
+    <Compile Include="Assets\Scripts\Utility\EnumActionAttribute.cs" />
+    <Compile Include="Assets\Scripts\Utility\FadeGameObject.cs" />
+    <Compile Include="Assets\Scripts\Utility\InfiniteScroll\IInfiniteScrollSetup.cs" />
+    <Compile Include="Assets\Scripts\Utility\InfiniteScroll\InfiniteScroll.cs" />
+    <Compile Include="Assets\Scripts\Utility\InfiniteScroll\InfiniteScrollLimited.cs" />
+    <Compile Include="Assets\Scripts\Utility\NineSlicedProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\DOTween\DOTween.XML" />
+    <None Include="Assets\Plugins\DOTween\DOTween43.xml" />
+    <None Include="Assets\Plugins\DOTween\DOTween46.xml" />
+    <None Include="Assets\Plugins\DOTween\DOTween50.xml" />
+    <None Include="Assets\Plugins\DOTween\Editor\DOTweenEditor.XML" />
+    <None Include="Assets\Plugins\DOTween\readme.txt" />
+    <None Include="Assets\Plugins\LINQtoGameObject\README.txt" />
+    <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
