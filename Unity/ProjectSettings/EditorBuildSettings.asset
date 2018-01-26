@@ -6,8 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Awake.unity
+    guid: 32ed43e3ec3c73f439cb582ac1d81e00
+  - enabled: 1
     path: Assets/Scenes/Battle.unity
-    guid: 4c819eae75bd3544998a196937879849
+    guid: 30799cb092bc35e44b300b69494ce220
+  - enabled: 1
+    path: Assets/Scenes/CharacterSelect.unity
+    guid: 76f310bb76c98554f909d9ef342e0dfb
+  - enabled: 1
+    path: Assets/Scenes/Novel.unity
+    guid: 6548392369377fa4f83179519dc26c41
+  - enabled: 1
+    path: Assets/Scenes/ResidentSystem.unity
+    guid: 68847829a8c98a4499b06e0c0a2e3df4
   - enabled: 1
     path: Assets/Scenes/Title.unity
-    guid: 66eb8bcf7414a4c459b171aaa5dab5fc
+    guid: 45990263353f96d40bddacd62f20ad4e
+  - enabled: 1
+    path: Assets/Scenes/Top.unity
+    guid: b70dc69b65d12f346a3c658c39f07f69

@@ -5,9 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - SeBank
-  - Chara
+  - DialogCanvas
   - Enemy
-  - Wall
+  - PlayerAttack
+  - EnemyAttack
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,15 @@ TagManager:
   - UI
   - 
   - 
-  - Chara
+  - Ground
+  - Object
+  - 
+  - 
+  - 
+  - 
+  - 
+  - Player
+  - PlayerAttack
   - 
   - 
   - 
@@ -26,16 +35,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - EnemyAttack
   - 
   - 
   - 
@@ -46,11 +47,14 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: Bg
-    uniqueID: 3047285409
+    uniqueID: 647672417
     locked: 0
-  - name: Chara
-    uniqueID: 2864374203
+  - name: Enemy
+    uniqueID: 1273580363
     locked: 0
-  - name: Effect
-    uniqueID: 3509249021
+  - name: Player
+    uniqueID: 855498731
+    locked: 0
+  - name: UI
+    uniqueID: 3660714237
     locked: 0

@@ -209,7 +209,7 @@ public partial class SimpleAnimation: MonoBehaviour
     }
 
     /*
-     * Editor拡張：SpherePrefabSetting
+     * Editor拡張：PanelPrefabSetting
      */
     public void CallOnEnableFromEditor()
     {
