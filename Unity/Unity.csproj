@@ -255,7 +255,7 @@
     <Compile Include="Assets\Scripts\Battle\Character.cs" />
     <Compile Include="Assets\Scripts\Battle\Enemy.cs" />
     <Compile Include="Assets\Scripts\Battle\Player.cs" />
-    <Compile Include="Assets\Scripts\CharacterSelect\CharacterSelectButton.cs" />
+    <Compile Include="Assets\Scripts\Battle\ViewerCharacter.cs" />
     <Compile Include="Assets\Scripts\Common\Dialog\DialogAnimation.cs" />
     <Compile Include="Assets\Scripts\Common\Dialog\DialogBase.cs" />
     <Compile Include="Assets\Scripts\Common\Dialog\DialogManager.cs" />
@@ -277,6 +277,8 @@
     <Compile Include="Assets\Scripts\Common\FrameWork\Singleton\OnlyOneBehavior.cs" />
     <Compile Include="Assets\Scripts\Common\FrameWork\Singleton\Singleton.cs" />
     <Compile Include="Assets\Scripts\Common\FrameWork\Singleton\SingletonMonoBehaiviour.cs" />
+    <Compile Include="Assets\Scripts\Common\JoyStick\InfoTouches.cs" />
+    <Compile Include="Assets\Scripts\Common\JoyStick\SimpleTouchController.cs" />
     <Compile Include="Assets\Scripts\Common\Other\AutoDestroy.cs" />
     <Compile Include="Assets\Scripts\Common\Other\EnumActionAttribute.cs" />
     <Compile Include="Assets\Scripts\Common\Other\NineSlicedProvider.cs" />
@@ -291,7 +293,12 @@
     <Compile Include="Assets\Scripts\Common\Sound\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Common\Sound\SoundUtility.cs" />
     <Compile Include="Assets\Scripts\GameInfoManager.cs" />
-    <Compile Include="Assets\Scripts\Top\TopController.cs" />
+    <Compile Include="Assets\Scripts\SceneController\AnimationViewerController.cs" />
+    <Compile Include="Assets\Scripts\SceneController\CharacterSelectController.cs" />
+    <Compile Include="Assets\Scripts\SceneController\NovelSceneController.cs" />
+    <Compile Include="Assets\Scripts\SceneController\SceneSelectController.cs" />
+    <Compile Include="Assets\Scripts\SceneController\TitleController.cs" />
+    <Compile Include="Assets\Scripts\SceneController\TopController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\DOTween\DOTween.XML" />

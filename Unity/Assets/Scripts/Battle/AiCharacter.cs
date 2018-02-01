@@ -8,7 +8,9 @@ namespace Battle
         [SerializeField] private Character _targetScript;
 
         // AI思考時間
-        [SerializeField] private float _updateAiTime;   //AI思考間隔
+        [SerializeField] private float _updateAiTimeMin;
+        [SerializeField] private float _updateAiTimeMax;
+        private float _currentUpdateAiTime;
         private float _currentAiTime;
 
         // AI思考パラメータ
@@ -28,6 +30,14 @@ namespace Battle
             Appeal,
         }
         private AiActionType _currentAiActionType = AiActionType.Idle;
+
+        protected override void Start()
+        {
+            base.Start();
+
+            // AI思考タイマーリセット
+            ResetAiTimer();
+        }
 
         protected virtual void Update()
         {
@@ -104,7 +114,7 @@ namespace Battle
             // 思考時間
             {
                 _currentAiTime += Time.deltaTime;
-                if (_currentAiTime < _updateAiTime)
+                if (_currentAiTime < _currentUpdateAiTime)
                 {
                     return;
                 }
@@ -121,7 +131,13 @@ namespace Battle
             PlayAiAction(aiActionType);
 
             // AI思考タイマーリセット
+            ResetAiTimer();
+        }
+
+        private void ResetAiTimer()
+        {
             _currentAiTime = 0;
+            _currentUpdateAiTime = Random.Range(_updateAiTimeMin, _updateAiTimeMax);
         }
         private AiActionType CalcAiActionType()
         {

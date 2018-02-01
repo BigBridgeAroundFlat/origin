@@ -1,11 +1,24 @@
 ﻿using System;
+using System.Linq;
 using Common.FrameWork;
+using Common.JoyStick;
+using Unity.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Battle
 {
     public class Player : CharacterAi
     {
+        // controller
+        [SerializeField] private SimpleTouchController _simpleTouchController;
+        [SerializeField] private GameObject _buttonParent;
+        public void ChangeEnablePlayerController(bool enable)
+        {
+            _simpleTouchController.gameObject.SetActive(enable);
+            _buttonParent.gameObject.SetActive(enable);
+        }
+
         protected override void Start()
         {
             base.Start();
@@ -23,6 +36,20 @@ namespace Battle
             // ダメージTag
             {
                 DamageTagList.Add("EnemyAttack");
+            }
+
+            {
+                var buttonList = _buttonParent.Descendants().OfComponent<Button>().ToList();
+                foreach (var button in buttonList)
+                {
+                    var name = button.gameObject.name;
+                    switch (name)
+                    {
+                        case "Attack": button.OnClickEtension(InputAction); break;
+                        case "Jump": button.OnClickEtension(Jump); break;
+                        case "Appeal": button.OnClickEtension(AppealNormal); break;
+                    }
+                }
             }
         }
         protected override void Damage(int value, bool isDownAttack)
@@ -135,7 +162,7 @@ namespace Battle
             }
 
             //左キー: -1、右キー: 1
-            var x = Input.GetAxisRaw("Horizontal");
+            var x = _simpleTouchController.GetTouchPosition.x;
             if (Math.Abs(x) < 0.01f)
             {
                 return false;

@@ -20,7 +20,14 @@ public class SceneEditor : Editor
 
     [MenuItem("Tools/Scene/Novel")]
     public static void LoadNovelScene() { LoadWithResidentSystem("Novel"); }
-private static void LoadWithResidentSystem(string sceneName)
+
+    [MenuItem("Tools/Scene/SceneSelect")]
+    public static void LoadSceneSelectScene() { LoadWithResidentSystem("SceneSelect"); }
+
+    [MenuItem("Tools/Scene/AnimationViewer")]
+    public static void LoadAnimationViewerScene() { LoadWithResidentSystem("AnimationViewer"); }
+
+    private static void LoadWithResidentSystem(string sceneName)
     {
         EditorSceneManager.OpenScene("Assets/Scenes/ResidentSystem.unity", OpenSceneMode.Single);
         EditorSceneManager.OpenScene(string.Format("Assets/Scenes/{0}.unity", sceneName), OpenSceneMode.Additive);

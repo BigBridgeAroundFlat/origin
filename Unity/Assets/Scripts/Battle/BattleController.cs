@@ -23,8 +23,8 @@ namespace Battle
         [SerializeField] private Image _imageTextTimeUp;
 
         // ref character
-        [SerializeField] private Character _playerScript;
-        [SerializeField] private Character _enemyScript;
+        [SerializeField] private Player _playerScript;
+        [SerializeField] private Enemy _enemyScript;
 
 
         // limit time
@@ -47,6 +47,9 @@ namespace Battle
             {
                 IsPlayBattle = true;
             });
+
+            // AIモード更新
+            UpdateAiMode();
         }
 
         private void Update()
@@ -84,8 +87,14 @@ namespace Battle
 
             // animation
             {
-                var targetScript = isEnemy ? _playerScript : _enemyScript;
-                targetScript.AppealWin();
+                if (isEnemy)
+                {
+                    _playerScript.AppealWin();
+                }
+                else
+                {
+                    _enemyScript.AppealWin();
+                }
             }
 
             // text演出&ダイアログ
@@ -137,11 +146,23 @@ namespace Battle
                 {
                     dialogInfo.DialogType = DialogUtility.DialogType.MessageDialog;
                     dialogInfo.Title = "Game Clear";
-                    dialogInfo.Message = "Go ChomeChome?";
+                    dialogInfo.Message = "Congratulations!";
+                    dialogInfo.UnenableCancelButton = true;
                     dialogInfo.OkCancelButtonCallback = (bool isOk) =>
                     {
-                        var sceneName = isOk ? "Top" : "Battle";
-                        TransitionSceneManager.Instance.TransitionScene(sceneName);
+                        // set novel info
+                        {
+                            var novelInfo = new GameInfoManager.NovelInfo();
+                            {
+                                novelInfo.Type = GameInfoManager.NovelInfo.NovelType.Special;
+                                novelInfo.No = 1;
+                                novelInfo.IsSceneView = false;
+                            }
+                            GameInfoManager.SetCurrentNovelInfo(novelInfo);
+                        }
+
+                        // change scene
+                        TransitionSceneManager.Instance.TransitionScene("Novel");
                     };
                 }
                 DialogManager.Instance.CreateDialog(dialogInfo);
@@ -210,9 +231,15 @@ namespace Battle
         private void PushPlayerAiMode()
         {
             GameInfoManager.IsPlayerAiMode = !GameInfoManager.IsPlayerAiMode;
-
+            UpdateAiMode();
+        }
+        private void UpdateAiMode()
+        {
             var alpha = GameInfoManager.IsPlayerAiMode ? 1.0f : 0.5f;
             FadeUtility.ChangeComponentAlpha(_playerAiModeButton.gameObject, FadeUtility.FadeTargetComponent.Image, alpha);
+
+            // コントローラーのenable変更
+            _playerScript.ChangeEnablePlayerController(!GameInfoManager.IsPlayerAiMode);
         }
 
         #endregion

@@ -283,7 +283,6 @@ public partial class SimpleAnimationPlayable : PlayableBehaviour
         public float targetWeight;
         public float weight;
         public float fadeSpeed;
-        public float speed;
         public AnimationClip clip;
         public Playable playable;
         public WrapMode wrapMode;

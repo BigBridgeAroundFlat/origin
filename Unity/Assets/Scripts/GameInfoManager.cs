@@ -28,4 +28,30 @@
 
     #endregion
 
+    #region novel
+
+    public class NovelInfo
+    {
+        public enum NovelType
+        {
+            None = 0,
+
+            Normal,
+            Special,
+        }
+        public NovelType Type = NovelType.Normal;
+        public int No = 1;
+        public bool IsSceneView;
+    }
+    private static NovelInfo _currentNovelInfo = new NovelInfo();
+    public static void SetCurrentNovelInfo(NovelInfo info)
+    {
+        _currentNovelInfo = info;
+    }
+    public static NovelInfo GetCurrentNovelInfo()
+    {
+        return _currentNovelInfo;
+    }
+
+    #endregion
 }

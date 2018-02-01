@@ -39,7 +39,10 @@ namespace Battle
             set
             {
                 _hpGaugeValue = value;
-                _hpGaugeSlider.value = _hpGaugeValue;
+                if (_hpGaugeSlider)
+                {
+                    _hpGaugeSlider.value = _hpGaugeValue;
+                }
             }
             get
             {
@@ -96,8 +99,11 @@ namespace Battle
 
             // Hp設定
             {
-                _hpGaugeSlider.maxValue = _hpMax;
-                _hpGaugeSlider.value = _hpMax;
+                if (_hpGaugeSlider)
+                {
+                    _hpGaugeSlider.maxValue = _hpMax;
+                    _hpGaugeSlider.value = _hpMax;
+                }
                 _hp = _hpMax;
                 _hpGaugeValue = _hpMax;
             }
@@ -320,6 +326,7 @@ namespace Battle
                 {
                     CharacterAnimator.SetBool("Down", true);
                     CharacterAnimator.SetBool("WakeUp", false);
+                    StopMove();
                 }
                 else
                 {
