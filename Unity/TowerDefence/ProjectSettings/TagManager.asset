@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - SeBank
+  - DialogCanvas
+  - Item
+  - Bullet
+  - Building
+  - Character
+  - PlayerAttack
+  - EnemyAttack
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Ground
+  - 
+  - 
+  - Item
+  - Bullet
+  - Building
+  - Character
+  - 
+  - 
+  - 
+  - 
+  - 
+  - PlayerAttack
+  - EnemyAttack
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Bg
+    uniqueID: 925370199
+    locked: 0
+  - name: Bulding
+    uniqueID: 3036953309
+    locked: 0
+  - name: Character
+    uniqueID: 1535792339
+    locked: 0
+  - name: Item
+    uniqueID: 3425584927
+    locked: 0
+  - name: Bullet
+    uniqueID: 3322459369
+    locked: 0
+  - name: Effect
+    uniqueID: 1731362509
+    locked: 0
+  - name: UI
+    uniqueID: 75159657
+    locked: 0
