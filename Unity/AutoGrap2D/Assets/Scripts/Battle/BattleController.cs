@@ -6,6 +6,7 @@ using System;
 using Common.FrameWork;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Battle
 {
@@ -26,15 +27,24 @@ namespace Battle
         [SerializeField] private Player _playerScript;
         [SerializeField] private Enemy _enemyScript;
 
-
         // limit time
         [SerializeField] private float _limitTime = 99.0f;
 
         // バトル中？
         public bool IsPlayBattle { get; private set; }
 
+        // ノベルシーン
+        private AsyncOperation _novelSceneAsyncOperation = null;
+        [SerializeField] private Image _fuckImage;
+
         private void Start()
         {
+            // ノベルシーン作成
+            {
+                _novelSceneAsyncOperation = SceneManager.LoadSceneAsync("Novel", LoadSceneMode.Additive);
+                _novelSceneAsyncOperation.allowSceneActivation = false;
+            }
+
             // UI系初期化
             {
                 _subMenuButton.OnClickEtension(PushSubMenuButton);
@@ -81,47 +91,40 @@ namespace Battle
 
 #region battle result
 
-        public void NotifyDeath(bool isEnemy)
+        public void NotifyDeath(bool isGameClear)
         {
             IsPlayBattle = false;
-
-            // animation
+            StartCoroutine(StageResultWait(isGameClear));
+        }
+        System.Collections.IEnumerator StageResultWait(bool isGameClear)
+        {
+            var wait = new WaitForSeconds(0.3f);
+            while (true)
             {
-                if (isEnemy)
+                yield return wait;
+
+                if (_playerScript.CanStageResult() && _enemyScript.CanStageResult())
                 {
-                    _playerScript.AppealWin();
-                }
-                else
-                {
-                    _enemyScript.AppealWin();
+                    break;
                 }
             }
 
-            // text演出&ダイアログ
+            if(isGameClear)
             {
-                var seq = DOTween.Sequence();
-                {
-                    seq.AppendInterval(2.0f);
-                    seq.AppendCallback(() =>
-                    {
-                        if (isEnemy)
-                        {
-                            GameClear();
-                        }
-                        else
-                        {
-                            GameOver();
-                        }
-                    });
-                }
+                GameClear();
+            }
+            else
+            {
+                GameOver();
             }
         }
         private void GameOver()
         {
+            _enemyScript.AppealWin();
+
             DoImageTextEffect(_imageTextFinish, () =>
             {
                 Time.timeScale = 0;
-
                 var dialogInfo = new DialogUtility.DialogInfo();
                 {
                     dialogInfo.DialogType = DialogUtility.DialogType.MessageDialog;
@@ -130,7 +133,7 @@ namespace Battle
                     dialogInfo.OkCancelButtonCallback = (bool isOk) =>
                     {
                         var sceneName = isOk ? "Battle" : "Top";
-                        TransitionSceneManager.Instance.TransitionScene(sceneName);
+                        StartCoroutine(ChangeScene(sceneName));
                     };
                 }
                 DialogManager.Instance.CreateDialog(dialogInfo);
@@ -138,37 +141,37 @@ namespace Battle
         }
         private void GameClear()
         {
-            DoImageTextEffect(_imageTextFinish, () =>
+            // set novel info
             {
-                Time.timeScale = 0;
-
-                var dialogInfo = new DialogUtility.DialogInfo();
+                var novelInfo = new GameInfoManager.NovelInfo();
                 {
-                    dialogInfo.DialogType = DialogUtility.DialogType.MessageDialog;
-                    dialogInfo.Title = "Game Clear";
-                    dialogInfo.Message = "Congratulations!";
-                    dialogInfo.UnenableCancelButton = true;
-                    dialogInfo.OkCancelButtonCallback = (bool isOk) =>
-                    {
-                        // set novel info
-                        {
-                            var novelInfo = new GameInfoManager.NovelInfo();
-                            {
-                                novelInfo.Type = GameInfoManager.NovelInfo.NovelType.Special;
-                                novelInfo.No = 1;
-                                novelInfo.IsSceneView = false;
-                            }
-                            GameInfoManager.SetCurrentNovelInfo(novelInfo);
-                        }
-
-                        // change scene
-                        TransitionSceneManager.Instance.TransitionScene("Novel");
-                    };
+                    novelInfo.Type = GameInfoManager.NovelInfo.NovelType.Special;
+                    novelInfo.No = 1;
+                    novelInfo.IsSceneView = false;
                 }
-                DialogManager.Instance.CreateDialog(dialogInfo);
-            });
-        }
+                GameInfoManager.SetCurrentNovelInfo(novelInfo);
+            }
 
+            // 移動＆アニメーション
+            {
+                _playerScript.ChangeGravityEnable(false);
+                _enemyScript.ChangeGravityEnable(false);
+                _fuckImage.gameObject.SetActive(true);
+
+                var seq = DOTween.Sequence();
+                {
+                    seq.Append(_playerScript.gameObject.transform.DOMove(new Vector3(-6.0f, -1.5f, 0), 1.0f));
+                    seq.Join(_enemyScript.gameObject.transform.DOMove(new Vector3(-3.0f, -1.5f, 0), 1.0f));
+                    seq.Join(_fuckImage.DOFade(1.0f, 1.0f));
+                    seq.AppendCallback(() =>
+                    {
+                        _playerScript.AppealWin();
+                        _enemyScript.AppealDown();
+                        _novelSceneAsyncOperation.allowSceneActivation = true;
+                    });
+                }
+            }
+        }
         private void TimeUp()
         {
             IsPlayBattle = false;
@@ -208,6 +211,7 @@ namespace Battle
         private void PushSubMenuButton()
         {
             Time.timeScale = 0;
+            IsPlayBattle = false;
 
             var dialogInfo = new DialogUtility.DialogInfo();
             {
@@ -215,14 +219,15 @@ namespace Battle
                 dialogInfo.Message = "Retry?";
                 dialogInfo.OkCancelButtonCallback = (bool result) =>
                 {
+                    Time.timeScale = 1.0f;
+
                     if (result)
                     {
-                        IsPlayBattle = false;
-                        TransitionSceneManager.Instance.TransitionScene("Battle");
+                        StartCoroutine(ChangeScene("Battle"));
                     }
                     else
                     {
-                        Time.timeScale = 1.0f;
+                        IsPlayBattle = true;
                     }
                 };
             }
@@ -242,6 +247,19 @@ namespace Battle
             _playerScript.ChangeEnablePlayerController(!GameInfoManager.IsPlayerAiMode);
         }
 
+        System.Collections.IEnumerator ChangeScene(string sceneName)
+        {
+            if(_novelSceneAsyncOperation.isDone == false)
+            {
+                var scene = SceneManager.GetSceneByName("Novel");
+                _novelSceneAsyncOperation.allowSceneActivation = true;
+                yield return null;
+
+                SceneManager.UnloadSceneAsync("Novel");
+            }
+
+            TransitionSceneManager.Instance.TransitionScene(sceneName);
+        }
         #endregion
     }
 }

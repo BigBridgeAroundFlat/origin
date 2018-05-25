@@ -9,6 +9,7 @@ namespace Novel
 {
     public class NovelSceneController : MonoBehaviour
     {
+        [SerializeField] private Camera _mainCamera;
         [SerializeField] private GameObject _flowChartParent;
 
         // special scene
@@ -22,6 +23,14 @@ namespace Novel
         private void Start()
         {
             _targetNovelInfo = GameInfoManager.GetCurrentNovelInfo();
+
+            // special scene
+            {
+                if(_targetNovelInfo.Type == GameInfoManager.NovelInfo.NovelType.Special)
+                {
+                    _mainCamera.gameObject.SetActive(false);
+                }
+            }
 
             // animation obj
             {

@@ -15,10 +15,8 @@ namespace Battle
         // cash
         private Rigidbody2D _rigidbody2D;
         protected Animator CharacterAnimator;
-        protected void SetAnimationController(RuntimeAnimatorController animationController)
-        {
-            CharacterAnimator.runtimeAnimatorController = animationController;
-        }
+        public void ChangeGravityEnable(bool enable) { _rigidbody2D.gravityScale = enable ? 1.0f : 0.0f; }
+        protected void SetAnimationController(RuntimeAnimatorController animationController){ CharacterAnimator.runtimeAnimatorController = animationController; }
 
         // 移動
         [SerializeField] private float speed; //歩くスピード
@@ -376,6 +374,11 @@ namespace Battle
         {
             CharacterAnimator.SetBool("AppealWin", true);
         }
+        public void AppealDown()
+        {
+            CharacterAnimator.SetBool("Down", true);
+            CharacterAnimator.SetBool("WakeUp", false);
+        }
 
         #endregion
 
@@ -394,6 +397,21 @@ namespace Battle
             Vector2 temp = transform.localScale;
             temp.x *= -1;
             transform.localScale = temp;
+        }
+
+        // ステージリザルト可能
+        public bool CanStageResult()
+        {
+            var state = CalcCurrentCharacterState();
+
+            switch(state)
+            {
+                case CharacterState.Idle:
+                case CharacterState.Down:
+                    return true;
+            }
+
+            return false;
         }
 
         // 状態取得：アニメーション
