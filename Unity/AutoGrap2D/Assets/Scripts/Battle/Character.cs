@@ -8,6 +8,7 @@ namespace Battle
     public class Character : MonoBehaviour
     {
         // ref
+        [SerializeField] private GameObject _damageEffectPrefab;
         [SerializeField] private GameObject _groundPoint;
         [SerializeField] private Slider _hpGaugeSlider;
 
@@ -68,6 +69,9 @@ namespace Battle
             Appeal,
         }
 
+        // キャラクタータイプ
+        private GameInfoManager.CharacterType characterType = GameInfoManager.CharacterType.None;
+
         protected virtual void Start()
         {
             //cash
@@ -78,7 +82,9 @@ namespace Battle
         }
         protected void SetCharacterParameter(GameInfoManager.CharacterType type)
         {
-            switch (type)
+            characterType = type;
+
+            switch (characterType)
             {
                 case GameInfoManager.CharacterType.Kohaku:
                 {
@@ -333,6 +339,12 @@ namespace Battle
                     CharacterAnimator.SetBool("Down", isDownAttack);
                     CharacterAnimator.SetBool("WakeUp", isDownAttack);
                 }
+            }
+
+            // effect
+            {
+                var damageEffect = Instantiate(_damageEffectPrefab, transform);
+                damageEffect.GetComponent<DamageEffect>().Init(characterType, value);
             }
         }
         protected bool IsDeath()
