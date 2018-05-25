@@ -34,6 +34,7 @@ namespace Battle
         private int _hp;
 
         // HPゲージ
+        [SerializeField] private HpFace _hpFace;
         private int _hpGaugeValue;
         private int HpGaugeInfo
         {
@@ -322,6 +323,7 @@ namespace Battle
             {
                 _hp = Mathf.Max(_hp - value, 0);
                 DOTween.To(() => HpGaugeInfo, (x) => HpGaugeInfo = x, _hp, 1);
+                _hpFace.UpdateHpFace(_hp, _hpMax);
             }
 
             //アニメーション
