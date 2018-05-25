@@ -1,6 +1,7 @@
 ﻿public static class GameInfoManager
 {
     public static bool IsPlayerAiMode = true;  //プレイヤーキャラクターもAIで動作
+    public static bool IsSpeedUp = false;  //速度アップ
 
     #region character type
 

@@ -16,6 +16,7 @@ namespace Battle
         [SerializeField] private Text _limitTimeText;
         [SerializeField] private Button _subMenuButton;
         [SerializeField] private Button _playerAiModeButton;
+        [SerializeField] private Button _speedUpButton;
         [SerializeField] private Image _limitTouchModal;
 
         // ref image text
@@ -48,7 +49,8 @@ namespace Battle
             // UI系初期化
             {
                 _subMenuButton.OnClickEtension(PushSubMenuButton);
-                _playerAiModeButton.OnClickEtension(PushPlayerAiMode);
+                _playerAiModeButton.OnClickEtension(PushPlayerAiModeButton);
+                _speedUpButton.OnClickEtension(PushSpeedUpButton);
                 UpdateLimitTimeUi();
             }
 
@@ -58,8 +60,8 @@ namespace Battle
                 IsPlayBattle = true;
             });
 
-            // AIモード更新
-            UpdateAiMode();
+            // AIモードの表示更新
+            UpdatePlayerAiModeButton();
         }
 
         private void Update()
@@ -233,18 +235,33 @@ namespace Battle
             }
             DialogManager.Instance.CreateDialog(dialogInfo);
         }
-        private void PushPlayerAiMode()
+        private void PushPlayerAiModeButton()
         {
             GameInfoManager.IsPlayerAiMode = !GameInfoManager.IsPlayerAiMode;
-            UpdateAiMode();
+            UpdatePlayerAiModeButton();
         }
-        private void UpdateAiMode()
+        private void UpdatePlayerAiModeButton()
         {
             var alpha = GameInfoManager.IsPlayerAiMode ? 1.0f : 0.5f;
-            FadeUtility.ChangeComponentAlpha(_playerAiModeButton.gameObject, FadeUtility.FadeTargetComponent.Image, alpha);
+            _playerAiModeButton.GetComponent<CanvasGroup>().alpha = alpha;
 
             // コントローラーのenable変更
             _playerScript.ChangeEnablePlayerController(!GameInfoManager.IsPlayerAiMode);
+        }
+        private void PushSpeedUpButton()
+        {
+            if (Time.timeScale == 0)
+            {
+                return;
+            }
+
+            GameInfoManager.IsSpeedUp = !GameInfoManager.IsSpeedUp;
+
+            var alpha = GameInfoManager.IsSpeedUp ? 1.0f : 0.5f;
+            _speedUpButton.GetComponent<CanvasGroup>().alpha = alpha;
+
+            // 速度変更
+            Time.timeScale = GameInfoManager.IsSpeedUp ? 3.0f : 1.0f;
         }
 
         System.Collections.IEnumerator ChangeScene(string sceneName)
