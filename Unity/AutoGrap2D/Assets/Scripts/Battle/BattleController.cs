@@ -3,10 +3,11 @@ using Common.FrameWork.Singleton;
 using Common.Scene;
 using DG.Tweening;
 using System;
-using Common.FrameWork;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Linq;
+using System.Linq;
 
 namespace Battle
 {
@@ -15,7 +16,6 @@ namespace Battle
         // ref
         [SerializeField] private Text _limitTimeText;
         [SerializeField] private Button _subMenuButton;
-        [SerializeField] private Button _playerAiModeButton;
         [SerializeField] private Button _speedUpButton;
         [SerializeField] private Image _limitTouchModal;
 
@@ -25,7 +25,7 @@ namespace Battle
         [SerializeField] private Image _imageTextTimeUp;
 
         // ref character
-        [SerializeField] private Player _playerScript;
+        [SerializeField] private PlayerUI _playerUi;
         [SerializeField] private Enemy _enemyScript;
 
         // limit time
@@ -49,7 +49,6 @@ namespace Battle
             // UI系初期化
             {
                 _subMenuButton.OnClickEtension(PushSubMenuButton);
-                _playerAiModeButton.OnClickEtension(PushPlayerAiModeButton);
                 _speedUpButton.OnClickEtension(PushSpeedUpButton);
                 UpdateLimitTimeUi();
             }
@@ -59,9 +58,6 @@ namespace Battle
             {
                 IsPlayBattle = true;
             });
-
-            // AIモードの表示更新
-            UpdatePlayerAiModeButton();
         }
 
         private void Update()
@@ -93,25 +89,37 @@ namespace Battle
 
 #region battle result
 
-        public void NotifyDeath(bool isGameClear)
+        public void NotifyDeath(bool isEnemy, GameObject obj)
         {
-            IsPlayBattle = false;
-            StartCoroutine(StageResultWait(isGameClear));
-        }
-        System.Collections.IEnumerator StageResultWait(bool isGameClear)
-        {
-            var wait = new WaitForSeconds(0.3f);
-            while (true)
+            if (isEnemy == false)
             {
-                yield return wait;
-
-                if (_playerScript.CanStageResult() && _enemyScript.CanStageResult())
+                _playerUi.NotifyDeathMonster(obj);
+                if (_playerUi.CheckGameOver() == false)
                 {
-                    break;
+                    return;
                 }
             }
 
-            if(isGameClear)
+            IsPlayBattle = false;
+            StageResultWait(isEnemy);
+        }
+        private void StageResultWait(bool isGameClear)
+        {
+            if (_enemyScript.CanStageResult() == false)
+            {
+                _enemyScript.StopMove();
+            }
+
+            var playerList = _playerUi.GetPlayerScriptList();
+            foreach (var player in playerList)
+            {
+                if(player.CanStageResult() == false)
+                {
+                    player.StopMove();
+                }
+            }
+
+            if (isGameClear)
             {
                 GameClear();
             }
@@ -156,18 +164,22 @@ namespace Battle
 
             // 移動＆アニメーション
             {
-                _playerScript.ChangeGravityEnable(false);
+                var playerList = _playerUi.GetPlayerScriptList();
+                foreach(var player in playerList)
+                {
+                    player.ChangeGravityEnable(false);
+                }
                 _enemyScript.ChangeGravityEnable(false);
                 _fuckImage.gameObject.SetActive(true);
 
                 var seq = DOTween.Sequence();
                 {
-                    seq.Append(_playerScript.gameObject.transform.DOMove(new Vector3(-6.0f, -1.5f, 0), 1.0f));
+                    seq.Append(playerList[0].gameObject.transform.DOMove(new Vector3(-6.0f, -1.5f, 0), 1.0f));
                     seq.Join(_enemyScript.gameObject.transform.DOMove(new Vector3(-3.0f, -1.5f, 0), 1.0f));
                     seq.Join(_fuckImage.DOFade(1.0f, 1.0f));
                     seq.AppendCallback(() =>
                     {
-                        _playerScript.AppealWin();
+                        playerList[0].AppealWin();
                         _enemyScript.AppealDown();
                         _novelSceneAsyncOperation.allowSceneActivation = true;
                     });
@@ -235,19 +247,6 @@ namespace Battle
             }
             DialogManager.Instance.CreateDialog(dialogInfo);
         }
-        private void PushPlayerAiModeButton()
-        {
-            GameInfoManager.IsPlayerAiMode = !GameInfoManager.IsPlayerAiMode;
-            UpdatePlayerAiModeButton();
-        }
-        private void UpdatePlayerAiModeButton()
-        {
-            var alpha = GameInfoManager.IsPlayerAiMode ? 1.0f : 0.5f;
-            _playerAiModeButton.GetComponent<CanvasGroup>().alpha = alpha;
-
-            // コントローラーのenable変更
-            _playerScript.ChangeEnablePlayerController(!GameInfoManager.IsPlayerAiMode);
-        }
         private void PushSpeedUpButton()
         {
             if (Time.timeScale == 0)
@@ -268,7 +267,6 @@ namespace Battle
         {
             if(_novelSceneAsyncOperation.isDone == false)
             {
-                var scene = SceneManager.GetSceneByName("Novel");
                 _novelSceneAsyncOperation.allowSceneActivation = true;
                 yield return null;
 

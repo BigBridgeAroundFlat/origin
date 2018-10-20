@@ -10,7 +10,6 @@ namespace Battle
         // ref
         [SerializeField] private GameObject _damageEffectPrefab;
         [SerializeField] private GameObject _groundPoint;
-        [SerializeField] private Slider _hpGaugeSlider;
 
         // cash
         private Rigidbody2D _rigidbody2D;
@@ -32,17 +31,14 @@ namespace Battle
         private int _hp;
 
         // HPゲージ
-        [SerializeField] private HpFace _hpFace;
+        [SerializeField] protected HpFace _hpFace;
+        public HpFace GetHpFace() { return _hpFace; }
         private int _hpGaugeValue;
         private int HpGaugeInfo
         {
             set
             {
                 _hpGaugeValue = value;
-                if (_hpGaugeSlider)
-                {
-                    _hpGaugeSlider.value = _hpGaugeValue;
-                }
             }
             get
             {
@@ -87,7 +83,7 @@ namespace Battle
             {
                 case GameInfoManager.CharacterType.Kohaku:
                 {
-                    speed = 9;
+                    speed = 7;
                     _jumpPower = 900;
                     _hpMax = 300;
                 }
@@ -95,28 +91,24 @@ namespace Battle
 
                 case GameInfoManager.CharacterType.Toko:
                 {
-                    speed = 8;
+                    speed = 10;
                     _jumpPower = 800;
-                    _hpMax = 400;
+                    _hpMax = 600;
                 }
                 break;
             }
 
             // Hp設定
             {
-                if (_hpGaugeSlider)
-                {
-                    _hpGaugeSlider.maxValue = _hpMax;
-                    _hpGaugeSlider.value = _hpMax;
-                }
                 _hp = _hpMax;
                 _hpGaugeValue = _hpMax;
+                _hpFace.UpdateHpFace(_hp, _hpMax);
             }
         }
 
         #region Can
 
-        protected bool CanUpdate()
+        protected virtual bool CanUpdate()
         {
             if (BattleController.Instance.IsPlayBattle == false)
             {
@@ -237,7 +229,7 @@ namespace Battle
             // animator
             CharacterAnimator.SetBool("Walk", true);
         }
-        protected void StopMove()
+        public void StopMove()
         {
             _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
             CharacterAnimator.SetBool("Walk", false);
@@ -417,6 +409,11 @@ namespace Battle
         // 状態取得：アニメーション
         public CharacterState CalcCurrentCharacterState()
         {
+            if(CharacterAnimator == null)
+            {
+                return CharacterState.Idle;
+            }
+
             var state = CharacterState.Idle;
             var info = CharacterAnimator.GetCurrentAnimatorStateInfo(0);
 

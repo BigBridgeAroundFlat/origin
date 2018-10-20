@@ -82,9 +82,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1779942710470954}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.8, y: -4.92, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4831376098446022}
   - {fileID: 4967147474874092}
@@ -195,7 +195,6 @@ MonoBehaviour:
   _damageEffectPrefab: {fileID: 1273239243631134, guid: b1de13a92c12d8844932fcc3cbc0d3dc,
     type: 2}
   _groundPoint: {fileID: 1542165406136366}
-  _hpGaugeSlider: {fileID: 0}
   speed: 0
   _jumpPower: 900
   _fallPower: 30
@@ -204,11 +203,8 @@ MonoBehaviour:
     m_Bits: 256
   _hpMax: 100
   _hpFace: {fileID: 0}
-  _targetScript: {fileID: 0}
-  _updateAiTimeMin: 0.1
-  _updateAiTimeMax: 2
-  _simpleTouchController: {fileID: 0}
-  _buttonParent: {fileID: 0}
+  _updateAiTimeMin: 4
+  _updateAiTimeMax: 8
 --- !u!114 &114641709334146914
 MonoBehaviour:
   m_ObjectHideFlags: 1

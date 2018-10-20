@@ -195,18 +195,16 @@ MonoBehaviour:
   _damageEffectPrefab: {fileID: 1273239243631134, guid: b1de13a92c12d8844932fcc3cbc0d3dc,
     type: 2}
   _groundPoint: {fileID: 1542165406136366}
-  _hpGaugeSlider: {fileID: 0}
   speed: 0
-  _jumpPower: 900
+  _jumpPower: 0
   _fallPower: 30
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 256
-  _hpMax: 300
+    m_Bits: 0
+  _hpMax: 100
   _hpFace: {fileID: 0}
-  _targetScript: {fileID: 0}
-  _updateAiTimeMin: 0.5
-  _updateAiTimeMax: 2
+  _updateAiTimeMin: 1
+  _updateAiTimeMax: 4
 --- !u!114 &114948882357527644
 MonoBehaviour:
   m_ObjectHideFlags: 1

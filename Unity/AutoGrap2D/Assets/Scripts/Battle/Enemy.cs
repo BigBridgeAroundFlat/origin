@@ -1,4 +1,5 @@
 ﻿using Common.FrameWork;
+using UnityEngine;
 
 namespace Battle
 {
@@ -30,8 +31,43 @@ namespace Battle
 
             if (IsDeath())
             {
-                BattleController.Instance.NotifyDeath(true);
+                BattleController.Instance.NotifyDeath(true, gameObject);
             }
+        }
+
+        protected override void UpdateTargetScript()
+        {
+            var targetList = GameObject.FindGameObjectsWithTag("Player");
+            var max = targetList.Length;
+            if(0 < max)
+            {
+                var index = Random.Range(0, max);
+                _targetScript = targetList[index].GetComponent<CharacterAi>();
+            }
+        }
+
+        protected override bool CanUpdate()
+        {
+            if(_targetScript == null)
+            {
+                UpdateTargetScript();
+                if(_targetScript == null)
+                {
+                    return false;
+                }
+            }
+
+            return base.CanUpdate();
+        }
+
+        protected override void Update()
+        {
+            if (_targetScript != null)
+            {
+                UpdateTargetScript();
+            }
+
+            base.Update();
         }
     }
 }

@@ -5,7 +5,9 @@ namespace Battle
     public class CharacterAi : Character
     {
         // ターゲット
-        [SerializeField] private Character _targetScript;
+        protected Character _targetScript;
+        protected virtual void UpdateTargetScript()
+        {}
 
         // AI思考時間
         [SerializeField] private float _updateAiTimeMin;
@@ -46,6 +48,10 @@ namespace Battle
                 return;
             }
 
+            if(_targetScript == null)
+            {
+                return;
+            }
             // ジャンプさせるなら接地判定処理必要
             //            UpdateGroundRayCastHit2D();
 
@@ -148,6 +154,13 @@ namespace Battle
              */
             var targetCharacterState = _targetScript.CalcCurrentCharacterState();
             var distance = CalcTragetDistance();
+            var currentAiType = _hpFace.GetCurrentAiType();
+
+            if(currentAiType == HpFace.AiIconType.Defence)
+            {
+                return AiActionType.MoveFar;
+            }
+
 
             /*
              * AI思考
@@ -158,6 +171,7 @@ namespace Battle
             if (distance < AttackRange)
             {
                 // アピール
+                if(currentAiType != HpFace.AiIconType.Attack)
                 {
                     var appealPercent = 10;
                     switch (targetCharacterState)
@@ -174,10 +188,14 @@ namespace Battle
                 }
 
                 // 待機
-                if (CheckPercent(20))
+                if (currentAiType != HpFace.AiIconType.Attack)
                 {
-                    return AiActionType.Idle;
+                    if (CheckPercent(20))
+                    {
+                        return AiActionType.Idle;
+                    }
                 }
+
 
                 //離れる
                 {
@@ -190,9 +208,12 @@ namespace Battle
                             break;
                     }
 
-                    if (CheckPercent(percent))
+                    if (currentAiType != HpFace.AiIconType.Attack)
                     {
-                        return AiActionType.MoveFar;
+                        if (CheckPercent(percent))
+                        {
+                            return AiActionType.MoveFar;
+                        }
                     }
                 }
 
@@ -207,6 +228,7 @@ namespace Battle
             else if (distance < DistanceMiddle)
             {
                 // アピール
+                if (currentAiType != HpFace.AiIconType.Attack)
                 {
                     var appealPercent = 20;
                     switch (targetCharacterState)
@@ -223,9 +245,12 @@ namespace Battle
                 }
 
                 // 待機
-                if (CheckPercent(50))
+                if (currentAiType != HpFace.AiIconType.Attack)
                 {
-                    return AiActionType.Idle;
+                    if (CheckPercent(50))
+                    {
+                        return AiActionType.Idle;
+                    }
                 }
 
                 //近づく
