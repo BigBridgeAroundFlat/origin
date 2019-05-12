@@ -315,11 +315,16 @@ namespace Battle
                 return;
             }
 
-            for (var i = 0; i < comboCount; i++)
-            {
-                var key = "Attack" + (i + 1);
-                CharacterAnimator.SetTrigger(key);
-            }
+            var key = "Attack" + comboCount;
+            CharacterAnimator.SetTrigger(key);
+
+            /*
+                        for (var i = 0; i < comboCount; i++)
+                        {
+                            var key = "Attack" + (i + 1);
+                            CharacterAnimator.SetTrigger(key);
+                        }
+            */
         }
 
         #endregion

@@ -42,11 +42,6 @@ public class SukebeController : MonoBehaviour
     {
         if(targetMode == TargetMode.None)
         {
-            if(sukebeMode != SukebeMode.Watch)
-            {
-                return;
-            }
-
             if (mode == TargetMode.None)
             {
                 return;

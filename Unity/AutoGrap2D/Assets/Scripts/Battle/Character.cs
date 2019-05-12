@@ -85,7 +85,7 @@ namespace Battle
                 {
                     speed = 7;
                     _jumpPower = 900;
-                    _hpMax = 300;
+                    _hpMax = 50;
                 }
                 break;
 
@@ -93,7 +93,7 @@ namespace Battle
                 {
                     speed = 10;
                     _jumpPower = 800;
-                    _hpMax = 600;
+                    _hpMax = 100;
                 }
                 break;
             }

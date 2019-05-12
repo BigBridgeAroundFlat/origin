@@ -203,8 +203,8 @@ MonoBehaviour:
     m_Bits: 256
   _hpMax: 100
   _hpFace: {fileID: 0}
-  _updateAiTimeMin: 4
-  _updateAiTimeMax: 8
+  _updateAiTimeMin: 1
+  _updateAiTimeMax: 2
 --- !u!114 &114641709334146914
 MonoBehaviour:
   m_ObjectHideFlags: 1

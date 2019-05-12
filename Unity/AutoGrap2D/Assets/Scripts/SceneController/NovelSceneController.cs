@@ -82,7 +82,7 @@ namespace Novel
         }
         public void ChangeTitleScene()
         {
-            var sceneName = _targetNovelInfo.IsSceneView ? "SceneSelect" : "Title";
+            var sceneName = _targetNovelInfo.IsSceneView ? "SceneSelect" : "Sukebe";
             TransitionSceneManager.Instance.TransitionScene(sceneName);
         }
     }
