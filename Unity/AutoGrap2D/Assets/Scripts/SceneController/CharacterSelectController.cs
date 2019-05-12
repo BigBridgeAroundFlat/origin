@@ -24,7 +24,7 @@ namespace SceneController
                     {
                         var selectCharacterType = (GameInfoManager.CharacterType)Enum.Parse(typeof(GameInfoManager.CharacterType), objName);
                         GameInfoManager.PlayerSelectCharacterType = selectCharacterType;
-                        GameInfoManager.EnemySelectCharacterType = selectCharacterType == GameInfoManager.CharacterType.Toko ? GameInfoManager.CharacterType.Kohaku : GameInfoManager.CharacterType.Toko;
+                        GameInfoManager.EnemySelectCharacterType = selectCharacterType == GameInfoManager.CharacterType.Heroine ? GameInfoManager.CharacterType.Kohaku : GameInfoManager.CharacterType.Heroine;
                     }
 
                     // set novel info

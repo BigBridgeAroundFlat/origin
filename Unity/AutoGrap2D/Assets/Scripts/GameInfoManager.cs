@@ -10,10 +10,10 @@
         None = 0,
 
         Kohaku,
-        Toko,
+        Heroine,
     }
     public static CharacterType PlayerSelectCharacterType = CharacterType.Kohaku;
-    public static CharacterType EnemySelectCharacterType = CharacterType.Toko;
+    public static CharacterType EnemySelectCharacterType = CharacterType.Heroine;
 
     public static string CalcCharacterAnimationControllerFilePath(CharacterType type)
     {
@@ -22,7 +22,7 @@
         switch (type)
         {
             case CharacterType.Kohaku: filePath += "Animator_Kohaku"; break;
-            case CharacterType.Toko: filePath += "Animator_Toko"; break;
+            case CharacterType.Heroine: filePath += "Animator_Heroine"; break;
         }
         return filePath;
     }

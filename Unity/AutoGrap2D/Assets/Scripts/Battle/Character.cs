@@ -65,7 +65,7 @@ namespace Battle
         }
 
         // キャラクタータイプ
-        private GameInfoManager.CharacterType characterType = GameInfoManager.CharacterType.None;
+        protected GameInfoManager.CharacterType characterType = GameInfoManager.CharacterType.None;
 
         protected virtual void Start()
         {
@@ -89,7 +89,7 @@ namespace Battle
                 }
                 break;
 
-                case GameInfoManager.CharacterType.Toko:
+                case GameInfoManager.CharacterType.Heroine:
                 {
                     speed = 10;
                     _jumpPower = 800;

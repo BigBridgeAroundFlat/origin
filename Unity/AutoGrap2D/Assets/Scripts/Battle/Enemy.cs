@@ -1,5 +1,6 @@
 ﻿using Common.FrameWork;
 using UnityEngine;
+using Unity.Linq;
 
 namespace Battle
 {
@@ -11,6 +12,12 @@ namespace Battle
 
             var characterType = GameInfoManager.EnemySelectCharacterType;
             SetCharacterParameter(characterType);
+
+            {
+                gameObject.DescendantsAndSelf().OfComponent<SpriteRenderer>().FirstOrDefault().flipX = true;
+                transform.localScale = new Vector3(1,1,1);
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            }
 
             // Set Animation Controller
             {

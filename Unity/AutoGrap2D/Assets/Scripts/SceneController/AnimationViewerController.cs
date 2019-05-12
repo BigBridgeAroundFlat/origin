@@ -84,7 +84,7 @@ namespace AnimationViewer
                 switch (toggle.name)
                 {
                     case "Kohaku": type = GameInfoManager.CharacterType.Kohaku; break;
-                    case "Toko": type = GameInfoManager.CharacterType.Toko; break;
+                    case "Heroine": type = GameInfoManager.CharacterType.Heroine; break;
                 }
             }
 

@@ -45,7 +45,17 @@ namespace Battle
         }
         public void Init(HpFace face)
         {
-            transform.localScale *= 8.0f;
+            if (characterType == GameInfoManager.CharacterType.Heroine)
+            {
+                gameObject.DescendantsAndSelf().OfComponent<SpriteRenderer>().FirstOrDefault().flipX = true;
+                transform.localScale = Vector3.one;
+            }
+            else
+            {
+                gameObject.DescendantsAndSelf().OfComponent<SpriteRenderer>().FirstOrDefault().flipX = false;
+                transform.localScale = Vector3.one * 8.0f;
+            }
+
             _hpFace = face;
             UpdateTargetScript();
         }

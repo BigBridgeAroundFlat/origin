@@ -88,7 +88,6 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -110,8 +109,6 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
-    debug:
-      m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &27337709
 GameObject:
@@ -679,6 +676,23 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4094601060784368, guid: 4c5ecb8acb3c5b543a53c887e292dfc5, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094601060784368, guid: 4c5ecb8acb3c5b543a53c887e292dfc5, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4094601060784368, guid: 4c5ecb8acb3c5b543a53c887e292dfc5, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 95059870799786432, guid: 4c5ecb8acb3c5b543a53c887e292dfc5,
+        type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 95e52b39552f55e4e80122cca5d6e772, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c5ecb8acb3c5b543a53c887e292dfc5, type: 2}
   m_IsPrefabParent: 0
@@ -2141,7 +2155,7 @@ GameObject:
   - component: {fileID: 1268178972}
   - component: {fileID: 1268178974}
   m_Layer: 5
-  m_Name: Toko
+  m_Name: Heroine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2871,7 +2885,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Toko
+  m_Text: 'Heroine
+
+'
 --- !u!222 &1416708342
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3962,6 +3978,7 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+  m_StereoMirrorMode: 0
 --- !u!4 &1911880389
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using Common.FrameWork;
 using DG.Tweening;
 using UnityEngine;
+using Unity.Linq;
 
 namespace Battle
 {
@@ -29,6 +30,19 @@ namespace Battle
                 var filePath = GameInfoManager.CalcCharacterAnimationControllerFilePath(characterType);
                 var animationController = ResourceManager.LoadRuntimeAnimatorController(filePath);
                 _characterAnimator.runtimeAnimatorController = animationController;
+            }
+
+            if (characterType == GameInfoManager.CharacterType.Heroine)
+            {
+                _characterAnimator.gameObject.DescendantsAndSelf().OfComponent<SpriteRenderer>().FirstOrDefault().flipX = true;
+                transform.localScale = Vector3.one;
+                transform.position = new Vector3(4.5f, 0, 0);
+            }
+            else
+            {
+                _characterAnimator.gameObject.DescendantsAndSelf().OfComponent<SpriteRenderer>().FirstOrDefault().flipX = false;
+                transform.localScale = Vector3.one * 8.0f;
+                transform.position = new Vector3(4.5f, -3.2f, 0);
             }
         }
 
@@ -80,11 +94,21 @@ namespace Battle
             _characterAnimator.SetBool("Down", isDown);
             _characterAnimator.SetBool("WakeUp", isDown);
         }
-        private void AttackComboAnimation(int comboCount)
+        private void AttackComboAnimation(int comboCount, bool isCombo = true)
         {
-            for (var i = 0; i < comboCount; i++)
+            isCombo = false;
+
+            if(isCombo)
             {
-                var key = "Attack" + (i + 1);
+                for (var i = 0; i < comboCount; i++)
+                {
+                    var key = "Attack" + (i + 1);
+                    _characterAnimator.SetTrigger(key);
+                }
+            }
+            else
+            {
+                var key = "Attack" + comboCount;
                 _characterAnimator.SetTrigger(key);
             }
         }
