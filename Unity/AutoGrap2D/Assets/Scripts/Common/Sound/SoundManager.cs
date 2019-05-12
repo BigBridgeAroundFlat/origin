@@ -104,6 +104,11 @@ namespace Common.Sound
 
         public void PlaySe(string fileName, AudioSource audioSource = null)
         {
+            if(fileName.IsEmpty())
+            {
+                return;
+            }
+
             AudioClip seAudioClip = null;
             {
                 // scene

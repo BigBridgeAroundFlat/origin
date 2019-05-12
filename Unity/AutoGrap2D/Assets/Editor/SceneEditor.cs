@@ -24,6 +24,9 @@ public class SceneEditor : Editor
     [MenuItem("Tools/Scene/SceneSelect")]
     public static void LoadSceneSelectScene() { LoadWithResidentSystem("SceneSelect"); }
 
+    [MenuItem("Tools/Scene/Sukebe")]
+    public static void LoadSukebeScene() { LoadWithResidentSystem("Sukebe"); }
+
     [MenuItem("Tools/Scene/AnimationViewer")]
     public static void LoadAnimationViewerScene() { LoadWithResidentSystem("AnimationViewer"); }
 
