@@ -161,6 +161,7 @@
     <Compile Include="Assets\Scripts\SceneController\SceneSelectController.cs" />
     <Compile Include="Assets\Scripts\SceneController\TitleController.cs" />
     <Compile Include="Assets\Scripts\SceneController\TopController.cs" />
+    <Compile Include="Assets\Scripts\Sukebe\SukebeController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\DOTween\DOTween.XML" />
